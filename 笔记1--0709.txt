@@ -1,0 +1,40 @@
+VFS   全称Virtual File System，虚拟文件系统
+
+1、Ext 全称Linux extended file system, extfs，即Linux扩展文件系统，Ext2就代表第二代文件扩展系统，Ext3/Ext4以此类推，它们都是Ext2的升级版，只不过为了快速恢复文件系统，减少一致性检查的时间，增加了日志功能，所以Ext2被称为索引式文件系统，而Ext3/Ext4被称为日志式文件系统，linux支持很多文件系统，包括网络文件系统NFS，Windows的Fat（File Allocation Table）文件系统
+2、查看linux支持的文件系统
+       ls -l /lib/modules/$(uname -r)/kernel/fs
+   查看Linux支持的文件系统(已载入到内存中)：cat /proc/filesystems
+
+3、Linux内核源代码的目录结构
+arch：此目录包含了核心源代码所支持的硬件体系结构相关的核心代码。如x86平台就是x86
+block：块设备，如sd卡，硬盘等，几乎可以认为块设备就是存储设备
+certs：认证相关
+crypto：加密。放油一些常见的加密算法的c语言代码实现。譬如md5,crc32,sha1等
+Documentation：放了一些文档
+drivers：设备驱动，它又进一步划分成几类设备驱动，没一种也有对应的子目录，如声卡的驱动对应drivers/sound
+fs：linux支持的文件系统代码，不同的文件系统有不同的子目录对应，如ext2文件系统对应的就是ex2子目录
+include：在哥哥目录包括了核心的大多数头文件
+init：核心启动代码
+ipc：进程间通信代码
+kernel：核心代码，同时与处理器结构相关代码放在arch/×/kernel目录下，其中因为printf函数在从内核内部调用时不支持SMP，所以用printk代替
+lib：库代码，与处理器结构相关库代码放在arch/×/lib目录下,在lib目录下有一个inflate.c，这个文件在启动的时候会解压缩内核并将它加载到内核中
+LICENSES：许可证
+mm：内存管理代码,与处理器结构相关库代码放在arch/×/mm目录下
+net：网络代码，每个子目录对应网络的一个方面
+samples：内核编程的范例
+scripts：脚本，辅助对linux内核进行配置编译生产的
+security：安全相关的代码
+sound：音频处理代码
+tools：用到的一些工具
+usr：目录下是initramfs相关的，和linux内核的启动有关
+virt：内核虚拟机相关
+COPYING：GPL版权申明。对具有GPL版权的源代码改动而形成的程序，或使用GPL工具产生的程序，具有GPL发表的义务，如公开源代码
+CREDITS：Linux主要的贡献者名单
+Kbuild：Kbuild是kernel build的意思，就是内核编译的意思。这个文件就是linux内核特有的内核编译体系需要用到的文件。
+Kconfig：这个脚本会在开发人员配置内核的时候用到
+MAINTAINERS：维护人员列表，对当前版本的内核各部分都有谁负责
+Makefile：第一个Makefile文件。用来组织内核的各模块，记录了个模块间的相互这间的联系和依托关系，编译时使用
+README：核心及其编译配置方法简单介绍
+
+4、缓冲区和缓存的区别：
+      缓冲区表示的不是文件的缓存内容，而是物理磁盘的缓存内容，缓存实际上是缓存文件内容，linux所使用的缓冲区和缓存在很大程度上以来虚拟内存的功能和性能
